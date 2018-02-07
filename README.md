@@ -15,8 +15,8 @@ The output is a float number, equal to a median of integers received by the devi
 ## TODOs
 
 - [x] Set up a repo
-- [ ] Set up Linux kernel coding style
-- [ ] Set up a Makefile 
+- [x] Set up a coding style
+- [ ] Set up a Makefile
 - [ ] Create a "hello world" kernel module
 - [ ] Set up a testing framework
 - [ ] Add basic tests (simple enough for a human to generate and verify)
@@ -30,4 +30,4 @@ The output is a float number, equal to a median of integers received by the devi
 
 ## License
 
-Copyright © 2018 Cezary Sałbut. All rights reserved. 
+Copyright © 2018 Cezary Sałbut. All rights reserved.

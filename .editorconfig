@@ -1,0 +1,16 @@
+# This file specifies basic coding style. Your editor has to support
+# editorconfig (natively or via a plugin) to abide by these settings.
+# See http://editorconfig.org/
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line = lf
+
+[Makefile]
+indent_style = tab
