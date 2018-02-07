@@ -2,7 +2,7 @@
 
 This software is an attempt to solve a programming assignment for a job interview.
 
-**Note to reviewers: this assignment is not finished yet; please wait with evaulation until it's done.**
+**Note to reviewers: this assignment is not finished yet; please wait with evaluation until it's done.**
 
 ## The Task
 
