@@ -1,1 +1,7 @@
 tags
+*.o
+*.ko
+.*
+Module.symvers
+modules.order
+rmkm.mod.c
