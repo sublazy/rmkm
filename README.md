@@ -16,8 +16,8 @@ The output is a float number, equal to a median of integers received by the devi
 
 - [x] Set up a repo
 - [x] Set up a coding style
-- [ ] Set up a Makefile
-- [ ] Create a "hello world" kernel module
+- [x] Set up a Makefile
+- [x] Create a "hello world" kernel module
 - [ ] Set up a testing framework
 - [ ] Add basic tests (simple enough for a human to generate and verify)
 - [ ] Research algorithms
