@@ -1,7 +1,9 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 
-MODULE_LICENSE("Proprietary");
+/* Kernel Module Boilerplate
+ * -------------------------------------------------------------------------- */
+MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Cezary Salbut");
 MODULE_DESCRIPTION("Rolling Median Kernel Module");
 MODULE_VERSION("0.1");
