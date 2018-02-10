@@ -115,9 +115,6 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
     int status = 0;
     static size_t ans_len = 0;
 
-    // TODO Figure out how to compile in C99, to avoid out-of-place declarations.
-    int bytes_not_copied = 0;
-
     printk(KERN_INFO "RMKM: len: %ld, *off: %lld\n", len, *offset);
 
     sprintf(ans_buf, "%d\n", ans);
@@ -127,7 +124,7 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 
     status = copy_to_user(buf, ans_buf, ans_len);
     if (status != 0) {
-        bytes_not_copied = status;
+        int bytes_not_copied = status;
         *offset += ans_len - bytes_not_copied;
         return -EFAULT;
     }
