@@ -1,9 +1,3 @@
-help:
-	@echo "Available make targets:"
-	@echo "   * build"
-	@echo "   * clean"
-	@echo "   * test"
-
 obj-m += rmkm.o
 
 build:
@@ -14,5 +8,11 @@ clean:
 
 test:
 	@echo TODO
+
+help:
+	@echo "Available make targets:"
+	@echo "   * build"
+	@echo "   * clean"
+	@echo "   * test"
 
 .PHONY: build clean test
