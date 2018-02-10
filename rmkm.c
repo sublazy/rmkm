@@ -49,6 +49,9 @@ static struct file_operations fops = {
 // Buffer to hold the answer (median calculation result).
 static char ans_buf[32];
 
+// Buffer to hold the input data.
+static char input_buf[8 * 1024];
+
 /* Function Definitions
  * -------------------------------------------------------------------------- */
 int init_module(void)
@@ -139,7 +142,19 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 static ssize_t
 device_write(struct file *filp, const char __user *buf, size_t len, loff_t *offset)
 {
-    printk(KERN_INFO "RMKM: dev write\n");
-    return -EINVAL;
+    printk(KERN_INFO "RMKM: write: len: %ld, *off: %lld\n", len, *offset);
+
+    int status = copy_from_user(input_buf, buf, len);
+    if (status != 0) {
+        return -EFAULT;
+    }
+
+    char *p = input_buf;
+    for (int i = 0; i < len; i++) {
+        printk(KERN_INFO "RMKM: input char: %c (0x%02x)\n", *p, *p);
+        p++;
+    }
+
+    return len;
 }
 
