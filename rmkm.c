@@ -3,6 +3,8 @@
 #include <linux/fs.h>
 #include <linux/device.h>
 #include <linux/cdev.h>
+#include <linux/uaccess.h>
+#include <stdbool.h>
 
 /* Kernel Module Boilerplate
  * -------------------------------------------------------------------------- */
@@ -37,11 +39,15 @@ static struct class *dev_class_descr;
 static dev_t dev_id;
 
 static struct file_operations fops = {
+    .owner = THIS_MODULE,
     .read = device_read,
     .write = device_write,
     .open = device_open,
     .release = device_release,
 };
+
+// Buffer to hold the answer (median calculation result).
+static char ans_buf[32];
 
 /* Function Definitions
  * -------------------------------------------------------------------------- */
@@ -90,24 +96,53 @@ void cleanup_module(void)
 static int
 device_open(struct inode *inode, struct file *file)
 {
+    printk(KERN_INFO "RMKM: dev open\n");
     return SUCCESS;
 }
 
 static int
 device_release(struct inode *inode, struct file *file)
 {
+    printk(KERN_INFO "RMKM: dev release\n");
     return SUCCESS;
 }
 
 static ssize_t
-device_read(struct file *filp, char *buf, size_t len, loff_t *offset)
+device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 {
-    return SUCCESS;
+    // int response for now, apparently floats in drivers are non-trivial.
+    int ans = 42;
+    int status = 0;
+    static size_t ans_len = 0;
+
+    // TODO Figure out how to compile in C99, to avoid out-of-place declarations.
+    int bytes_not_copied = 0;
+
+    printk(KERN_INFO "RMKM: len: %ld, *off: %lld\n", len, *offset);
+
+    sprintf(ans_buf, "%d\n", ans);
+    ans_len = strlen(ans_buf);
+    printk(KERN_INFO "RMKM: response len: %ld\n", ans_len);
+    *offset += ans_len;
+
+    status = copy_to_user(buf, ans_buf, ans_len);
+    if (status != 0) {
+        bytes_not_copied = status;
+        *offset += ans_len - bytes_not_copied;
+        return -EFAULT;
+    }
+
+    if (*offset > ans_len) {
+        ans_len = 0;
+    }
+
+    return ans_len;
 }
 
 static ssize_t
-device_write(struct file *filp, const char *buf, size_t len, loff_t *offset)
+device_write(struct file *filp, const char __user *buf, size_t len, loff_t *offset)
 {
-    return SUCCESS;
+    printk(KERN_INFO "RMKM: dev write\n");
+    return -EINVAL;
 }
 
