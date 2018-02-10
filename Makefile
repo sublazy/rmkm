@@ -8,7 +8,15 @@ clean:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
 
 test:
-	@echo TODO
+	sudo insmod rmkm.ko
+	sudo chmod o+rw /dev/median
+	cat /dev/median
+	echo "1 2 3" > /dev/median
+	cat /dev/median
+	echo -e " 10 \t12 \n\v\t  13   " > /dev/median
+	cat /dev/median
+	cat /dev/median
+	sudo rmmod rmkm.ko
 
 help:
 	@echo "Available make targets:"
