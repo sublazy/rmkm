@@ -18,6 +18,9 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Set up a coding style
 - [x] Set up a Makefile
 - [x] Create a "hello world" kernel module
+- [x] Create a character device (manually)
+- [x] Create/Destroy /dev/median device (automatically)
+- [ ] Make /dev/median consume and produce data
 - [ ] Set up a testing framework
 - [ ] Add basic tests (simple enough for a human to generate and verify)
 - [ ] Research algorithms
@@ -27,6 +30,13 @@ The output is a float number, equal to a median of integers received by the devi
 - [ ] Add more serious tests
 - [ ] Make it fast (or otherwise optimal)
 - [ ] Add stress tests
+- [ ] Polish the code for better maintainability
+
+## References
+
+- [The Linux Kernel Module Programming Guide](http://tldp.org/LDP/lkmpg/2.6/html/)
+- [The Linux driver implementer’s API guide](https://www.kernel.org/doc/html/v4.15/driver-api/index.html)
+- https://opensourceforu.com/tag/linux-device-drivers-series/
 
 ## License
 
