@@ -5,6 +5,9 @@
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
 #include <stdbool.h>
+#include <linux/ctype.h>
+
+#include "int_parser.h"
 
 /* Kernel Module Boilerplate
  * -------------------------------------------------------------------------- */
@@ -50,7 +53,8 @@ static struct file_operations fops = {
 static char ans_buf[32];
 
 // Buffer to hold the input data.
-static char input_buf[8 * 1024];
+#define INPUT_BUF_SIZE   32
+static char input_buf[INPUT_BUF_SIZE];
 
 /* Function Definitions
  * -------------------------------------------------------------------------- */
@@ -139,22 +143,54 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
     return ans_len;
 }
 
-static ssize_t
-device_write(struct file *filp, const char __user *buf, size_t len, loff_t *offset)
+static bool isvalid(char c)
 {
-    printk(KERN_INFO "RMKM: write: len: %ld, *off: %lld\n", len, *offset);
+    if (isdigit(c) || isspace(c) || c == '-')
+        return true;
+    else
+        return false;
+}
 
-    int status = copy_from_user(input_buf, buf, len);
+static void median_calc_feed(int number)
+{
+    (void) number;
+}
+
+static ssize_t
+device_write(struct file *filp, const char __user *buf, size_t recvd_data_len, loff_t *offset)
+{
+    printk(KERN_INFO "RMKM: write: len: %ld, *off: %lld\n",
+                    recvd_data_len, *offset);
+
+    int status = copy_from_user(input_buf, buf, recvd_data_len);
     if (status != 0) {
         return -EFAULT;
     }
 
     char *p = input_buf;
-    for (int i = 0; i < len; i++) {
-        printk(KERN_INFO "RMKM: input char: %c (0x%02x)\n", *p, *p);
+
+    while (p - input_buf < recvd_data_len) {
+
+        if (!isvalid(*p))
+            return -EINVAL;
+
+        int_parser_feed(*p);
+
+        if (int_parser_is_num_ready()) {
+            int new_input_num = int_parser_get_num();
+            median_calc_feed(new_input_num);
+            //printk(KERN_INFO "RMKM: input num: %d\n", new_input_num);
+        }
+
         p++;
     }
 
-    return len;
+
+    /* for (int i = 0; i < recvd_data_len; i++) { */
+    /*     printk(KERN_INFO "RMKM: input char: %c (0x%02x)\n", *p, *p); */
+    /*     p++; */
+    /* } */
+
+    return recvd_data_len;
 }
 
