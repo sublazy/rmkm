@@ -99,8 +99,6 @@ int median_calc_get_result(bool *is_result_float)
         }
     }
 
-    printk(KERN_INFO "RMKM: m_l: %d, m_r: %d\n", median_l, median_r);
-
     if (is_even(cnt_total)) {
         if (median_l != median_r) {
             median = (median_l + median_r) / 2;

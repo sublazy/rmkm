@@ -62,7 +62,7 @@ static char input_buf[INPUT_BUF_SIZE];
  * -------------------------------------------------------------------------- */
 int init_module(void)
 {
-    printk(KERN_INFO "RMKM: Hello!\n");
+    printk(KERN_INFO "RMKM: Load the module\n");
 
     if (alloc_chrdev_region(&dev_id, 0, 1, DEVICE_NAME) < 0) {
         return -1;
@@ -95,8 +95,8 @@ int init_module(void)
 
 void cleanup_module(void)
 {
-    printk(KERN_INFO "RMKM: Cleaning up.\n");
-    median_calc_dbg_print();
+    printk(KERN_INFO "RMKM: Unload the module\n");
+    //median_calc_dbg_print();
     cdev_del(&dev_descr);
     device_destroy(dev_class_descr, dev_id);
     class_destroy(dev_class_descr);
@@ -174,7 +174,7 @@ device_write(struct file *filp, const char __user *buf, size_t recvd_data_len,
         if (int_parser_is_num_ready()) {
             int new_input_num = int_parser_get_num();
             median_calc_feed(new_input_num);
-            printk(KERN_INFO "RMKM: input num: %d\n", new_input_num);
+            //printk(KERN_INFO "RMKM: input num: %d\n", new_input_num);
         }
 
         p++;
