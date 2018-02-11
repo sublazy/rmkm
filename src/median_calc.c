@@ -56,6 +56,25 @@ static bool is_odd(int n)
     return !is_even(n);
 }
 
+
+// Tells where in the main array (under which index) the number should be stored.
+static unsigned int idx(int n)
+{
+    return (unsigned int)n;
+}
+
+// Insert a new input number into sorted data store.
+static void insert(int n)
+{
+    occurences[idx(n)]++;
+}
+
+// Returns how many times a given number appears in the data set.
+unsigned int get_occurences(int n)
+{
+    return occurences[idx(n)];
+}
+
 /* Public functions
  * -------------------------------------------------------------------------- */
 void median_calc_feed(int n)
@@ -65,8 +84,8 @@ void median_calc_feed(int n)
         return;
     }
 
+    insert(n);
     cnt_total++;
-    occurences[n]++;
     cnt_left_half = cnt_total / 2;
 }
 
@@ -93,17 +112,19 @@ int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
     int median_l = 0, median_r = 0;
 
     for (unsigned int n = 0; n < INPUT_RANGE; n++) {
-        cnt_left_scanned += occurences[n];
+
+        unsigned int occurences_n = get_occurences(n);
+        cnt_left_scanned += occurences_n;
         if (cnt_left_scanned > cnt_left_half) {
             median = n;
             median_r = n;
-            if (occurences[n] > 1) {
+            if (occurences_n > 1) {
                 median_l = n;
             }
             break;
         }
 
-        if (occurences[n] > 0) {
+        if (occurences_n > 0) {
             median_l = n;
         }
     }
@@ -126,6 +147,6 @@ void median_calc_dbg_print(void)
     printk(KERN_INFO "RMKM: Received numbers cnt: %d\n", cnt_total);
     printk(KERN_INFO "RMKM: Numbers to the left of the median: %d\n", cnt_left_half);
     for (unsigned int i = 0; i < INPUT_RANGE; i++) {
-        printk(KERN_INFO "RMKM: cnt [%d]:\t%d\n", i, occurences[i]);
+        printk(KERN_INFO "RMKM: cnt [%d]:\t%d\n", i, get_occurences(i));
     }
 }
