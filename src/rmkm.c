@@ -95,6 +95,7 @@ int init_module(void)
 void cleanup_module(void)
 {
     printk(KERN_INFO "RMKM: Cleaning up.\n");
+    median_calc_dbg_print();
     cdev_del(&dev_descr);
     device_destroy(dev_class_descr, dev_id);
     class_destroy(dev_class_descr);
