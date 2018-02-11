@@ -20,7 +20,11 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Create a "hello world" kernel module
 - [x] Create a character device (manually)
 - [x] Create/Destroy /dev/median device (automatically)
-- [ ] Make /dev/median consume and produce data
+- [x] Make /dev/median consume and produce data
+- [ ] Make the device actually calculate a median
+- [ ] Handle negative integers
+- [ ] Handle float results
+- [ ] Return NaN when no input yet
 - [ ] Set up a testing framework
 - [ ] Add basic tests (simple enough for a human to generate and verify)
 - [ ] Research algorithms
