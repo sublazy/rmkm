@@ -125,7 +125,7 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
     if (is_result_float) {
         sprintf(ans_buf, "%d.5\n", ans);
     } else {
-        sprintf(ans_buf, "%d\n", ans);
+        sprintf(ans_buf, "%d.0\n", ans);
     }
 
     ans_len = strlen(ans_buf);
