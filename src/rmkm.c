@@ -9,6 +9,7 @@
 
 #include "int_parser.h"
 #include "median_calc.h"
+#include "utils.h"
 
 /* Kernel Module Boilerplate
  * -------------------------------------------------------------------------- */
@@ -117,16 +118,20 @@ device_release(struct inode *inode, struct file *file)
 static ssize_t
 device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 {
-    // int response for now, apparently floats in drivers are non-trivial.
-    int ans = median_calc_get_result();
-    int status = 0;
+    bool is_result_float = false;
+    int ans = median_calc_get_result(&is_result_float);
     static size_t ans_len = 0;
 
-    sprintf(ans_buf, "%d\n", ans);
+    if (is_result_float) {
+        sprintf(ans_buf, "%d.5\n", ans);
+    } else {
+        sprintf(ans_buf, "%d\n", ans);
+    }
+
     ans_len = strlen(ans_buf);
     *offset += ans_len;
 
-    status = copy_to_user(buf, ans_buf, ans_len);
+    int status = copy_to_user(buf, ans_buf, ans_len);
     if (status != 0) {
         int bytes_not_copied = status;
         *offset += ans_len - bytes_not_copied;
