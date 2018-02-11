@@ -9,18 +9,35 @@ build:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
 
+reload:
+	 @echo "reloading rmkm module"
+	 @sudo rmmod rmkm.ko
+	 @sudo insmod rmkm.ko
+	 @sudo chmod o+rw /dev/median
+
 test:
 	@echo "Note: Run 'dmesg -w' in a separate terminal to see results."
 	sudo insmod rmkm.ko
 	sudo chmod o+rw /dev/median
+	echo "1 3 6 7" > /dev/median
 	cat /dev/median
-	echo "3 1 2" > /dev/median
+	@make --no-print-directory reload
+	echo "1 2 3" > /dev/median
 	cat /dev/median
-	echo "11 15" > /dev/median
+	@make --no-print-directory reload
+	echo "1 3 3 5" > /dev/median
 	cat /dev/median
-	echo "15 15" > /dev/median
+	@make --no-print-directory reload
+	echo "1 1 7 7 7 8 9" > /dev/median
 	cat /dev/median
-	echo "0 0 0 0" > /dev/median
+	@make --no-print-directory reload
+	echo "1" > /dev/median
+	cat /dev/median
+	echo "2" > /dev/median
+	cat /dev/median
+	echo "3" > /dev/median
+	cat /dev/median
+	echo "4" > /dev/median
 	cat /dev/median
 	sudo rmmod rmkm.ko
 
