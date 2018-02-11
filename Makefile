@@ -21,7 +21,7 @@ test:
 	sudo chmod o+rw /dev/median
 	cat /dev/median
 	cat /dev/median
-	echo "1 3 6 7" > /dev/median
+	echo 1 3 6 7 > /dev/median
 	cat /dev/median
 	@make --no-print-directory reload
 	echo "1 2 3" > /dev/median
@@ -33,13 +33,16 @@ test:
 	echo "1 1 7 7 7 8 9" > /dev/median
 	cat /dev/median
 	@make --no-print-directory reload
-	echo "1" > /dev/median
+	echo "-1" > /dev/median
 	cat /dev/median
-	echo "2" > /dev/median
+	echo " -2 -3" > /dev/median
 	cat /dev/median
 	echo "3" > /dev/median
 	cat /dev/median
 	echo "4" > /dev/median
+	cat /dev/median
+	@make --no-print-directory reload
+	echo "-1 0 1" > /dev/median
 	cat /dev/median
 	sudo rmmod rmkm.ko
 

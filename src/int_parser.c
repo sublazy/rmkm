@@ -51,9 +51,7 @@ void int_parser_feed(char c)
 {
     static char cprev = ' ';
 
-    // TODO handle negative numbers.
-
-    if ((isdigit(c))) {
+    if (isdigit(c) || ((c == '-') && (cprev = ' '))) {
         input_buf[idx] = c;
         idx++;
     }

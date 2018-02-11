@@ -19,14 +19,14 @@
 
 /* Constants
  * -------------------------------------------------------------------------- */
-#define INPUT_LIMIT_UPPER   (10)
-#define INPUT_LIMIT_LOWER   0
-#define INPUT_RANGE  (INPUT_LIMIT_UPPER - INPUT_LIMIT_LOWER)
+#define INPUT_LIMIT_UPPER   (15)
+#define INPUT_LIMIT_LOWER   (-16)
+#define INPUT_SPREAD  (INPUT_LIMIT_UPPER - INPUT_LIMIT_LOWER + 1)
 
 /* Private Data
  * -------------------------------------------------------------------------- */
 // Our primary data store. Counts how many times any input number occured.
-int occurences[INPUT_RANGE];
+int occurences[INPUT_SPREAD];
 
 // Number of numbers supplied so far.
 unsigned int cnt_total = 0;
@@ -60,7 +60,7 @@ static bool is_odd(int n)
 // Tells where in the main array (under which index) the number should be stored.
 static unsigned int idx(int n)
 {
-    return (unsigned int)n;
+    return (unsigned int) (n - INPUT_LIMIT_LOWER);
 }
 
 // Insert a new input number into sorted data store.
@@ -111,7 +111,7 @@ int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
     // two middle values.
     int median_l = 0, median_r = 0;
 
-    for (unsigned int n = 0; n < INPUT_RANGE; n++) {
+    for (int n = INPUT_LIMIT_LOWER; n <= INPUT_LIMIT_UPPER; n++) {
 
         unsigned int occurences_n = get_occurences(n);
         cnt_left_scanned += occurences_n;
@@ -146,7 +146,7 @@ void median_calc_dbg_print(void)
 {
     printk(KERN_INFO "RMKM: Received numbers cnt: %d\n", cnt_total);
     printk(KERN_INFO "RMKM: Numbers to the left of the median: %d\n", cnt_left_half);
-    for (unsigned int i = 0; i < INPUT_RANGE; i++) {
-        printk(KERN_INFO "RMKM: cnt [%d]:\t%d\n", i, get_occurences(i));
+    for (int n = INPUT_LIMIT_LOWER; n <= INPUT_LIMIT_UPPER; n++) {
+        printk(KERN_INFO "RMKM: cnt [%d]:\t%d\n", n, get_occurences(n));
     }
 }
