@@ -14,12 +14,13 @@ test:
 	sudo insmod rmkm.ko
 	sudo chmod o+rw /dev/median
 	cat /dev/median
-	echo "1 2 3" > /dev/median
+	echo "3 1 2" > /dev/median
 	cat /dev/median
-	echo -e " 10 \t12 \n\v\t  13   " > /dev/median
-	echo -e "    01234567 10023     " > /dev/median
-	echo -e " 2000000001 " > /dev/median
+	echo "11 15" > /dev/median
 	cat /dev/median
+	echo "15 15" > /dev/median
+	cat /dev/median
+	echo "0 0 0 0" > /dev/median
 	cat /dev/median
 	sudo rmmod rmkm.ko
 
