@@ -70,10 +70,19 @@ void median_calc_feed(int n)
     cnt_left_half = cnt_total / 2;
 }
 
-int median_calc_get_result(bool *is_result_float)
+int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
 {
     ASSERT_RMKM(is_result_float != NULL);
+    ASSERT_RMKM(is_result_nan != NULL);
+
     *is_result_float = false;
+    *is_result_nan = false;
+
+    if (cnt_total == 0) {
+        *is_result_nan = true;
+        return 0;
+    }
+
     int median = 0;
 
     // Counter of numbers on the left from median.

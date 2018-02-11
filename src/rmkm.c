@@ -119,13 +119,18 @@ static ssize_t
 device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 {
     bool is_result_float = false;
-    int ans = median_calc_get_result(&is_result_float);
+    bool is_result_nan = false;
+    int ans = median_calc_get_result(&is_result_float, &is_result_nan);
     static size_t ans_len = 0;
 
-    if (is_result_float) {
-        sprintf(ans_buf, "%d.5\n", ans);
+    if (is_result_nan) {
+        sprintf(ans_buf, "NaN\n");
     } else {
-        sprintf(ans_buf, "%d.0\n", ans);
+        if (is_result_float) {
+            sprintf(ans_buf, "%d.5\n", ans);
+        } else {
+            sprintf(ans_buf, "%d.0\n", ans);
+        }
     }
 
     ans_len = strlen(ans_buf);

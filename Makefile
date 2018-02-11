@@ -19,6 +19,8 @@ test:
 	@echo "Note: Run 'dmesg -w' in a separate terminal to see results."
 	sudo insmod rmkm.ko
 	sudo chmod o+rw /dev/median
+	cat /dev/median
+	cat /dev/median
 	echo "1 3 6 7" > /dev/median
 	cat /dev/median
 	@make --no-print-directory reload
