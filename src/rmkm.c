@@ -8,6 +8,7 @@
 #include <linux/ctype.h>
 
 #include "int_parser.h"
+#include "median_calc.h"
 
 /* Kernel Module Boilerplate
  * -------------------------------------------------------------------------- */
@@ -116,7 +117,7 @@ static ssize_t
 device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 {
     // int response for now, apparently floats in drivers are non-trivial.
-    int ans = 42;
+    int ans = median_calc_get_result();
     int status = 0;
     static size_t ans_len = 0;
 
@@ -144,11 +145,6 @@ static bool isvalid(char c)
         return true;
     else
         return false;
-}
-
-static void median_calc_feed(int number)
-{
-    (void) number;
 }
 
 static ssize_t
