@@ -103,14 +103,12 @@ void cleanup_module(void)
 static int
 device_open(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO "RMKM: dev open\n");
     return SUCCESS;
 }
 
 static int
 device_release(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO "RMKM: dev release\n");
     return SUCCESS;
 }
 
@@ -122,11 +120,8 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
     int status = 0;
     static size_t ans_len = 0;
 
-    printk(KERN_INFO "RMKM: len: %ld, *off: %lld\n", len, *offset);
-
     sprintf(ans_buf, "%d\n", ans);
     ans_len = strlen(ans_buf);
-    printk(KERN_INFO "RMKM: response len: %ld\n", ans_len);
     *offset += ans_len;
 
     status = copy_to_user(buf, ans_buf, ans_len);
@@ -157,11 +152,9 @@ static void median_calc_feed(int number)
 }
 
 static ssize_t
-device_write(struct file *filp, const char __user *buf, size_t recvd_data_len, loff_t *offset)
+device_write(struct file *filp, const char __user *buf, size_t recvd_data_len,
+                loff_t *offset)
 {
-    printk(KERN_INFO "RMKM: write: len: %ld, *off: %lld\n",
-                    recvd_data_len, *offset);
-
     int status = copy_from_user(input_buf, buf, recvd_data_len);
     if (status != 0) {
         return -EFAULT;
@@ -179,17 +172,11 @@ device_write(struct file *filp, const char __user *buf, size_t recvd_data_len, l
         if (int_parser_is_num_ready()) {
             int new_input_num = int_parser_get_num();
             median_calc_feed(new_input_num);
-            //printk(KERN_INFO "RMKM: input num: %d\n", new_input_num);
+            printk(KERN_INFO "RMKM: input num: %d\n", new_input_num);
         }
 
         p++;
     }
-
-
-    /* for (int i = 0; i < recvd_data_len; i++) { */
-    /*     printk(KERN_INFO "RMKM: input char: %c (0x%02x)\n", *p, *p); */
-    /*     p++; */
-    /* } */
 
     return recvd_data_len;
 }
