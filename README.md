@@ -23,7 +23,7 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Make /dev/median consume and produce data
 - [x] Make the device actually calculate a median
 - [ ] Handle negative integers
-- [ ] Handle float results
+- [x] Handle float results
 - [ ] Handle large chunks of input data
 - [ ] Return NaN when no input yet
 - [ ] Set up a testing framework
