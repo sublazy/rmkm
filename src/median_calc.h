@@ -1,6 +1,9 @@
 #ifndef MEDIAN_CALC_H
 #define MEDIAN_CALC_H
 
+void median_calc_init(void);
+void median_calc_cleanup(void);
+
 void median_calc_feed(int number);
 
 // This function will only return integers, but will tell you when the result

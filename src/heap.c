@@ -1,4 +1,6 @@
 #include <linux/kernel.h>
+#include <linux/slab.h>
+#include <linux/gfp.h>
 
 #include "heap.h"
 
@@ -24,11 +26,22 @@ static unsigned int cnt_heaps_in_use = 0;
  * -------------------------------------------------------------------------- */
 heap_t *heap_new(size_t initial_size)
 {
-    return NULL;
+    // TODO Support multiple new/delete cycles.
+    unsigned int new_heap_idx = cnt_heaps_in_use;
+    cnt_heaps_in_use++;
+
+    heap_t *new_heap = &heap_pool[new_heap_idx];
+
+    new_heap->len = PAGE_SIZE;
+    new_heap->data = kzalloc(new_heap->len, GFP_KERNEL);
+    new_heap->cnt = 0;
+
+    return new_heap;
 }
 
 void heap_delete(heap_t *heap)
 {
+    kfree(heap->data);
 }
 
 long heap_peek(heap_t *heap)

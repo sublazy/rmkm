@@ -77,6 +77,14 @@ unsigned int get_occurences(int n)
 
 /* Public functions
  * -------------------------------------------------------------------------- */
+void median_calc_init(void)
+{
+}
+
+void median_calc_cleanup(void)
+{
+}
+
 void median_calc_feed(int n)
 {
     if (!is_number_in_range(n)) {

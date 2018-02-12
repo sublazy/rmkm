@@ -90,6 +90,8 @@ int init_module(void)
         return -1;
     }
 
+    median_calc_init();
+
     return SUCCESS;
 }
 
@@ -97,6 +99,7 @@ void cleanup_module(void)
 {
     printk(KERN_INFO "RMKM: Unload the module\n");
     //median_calc_dbg_print();
+    median_calc_cleanup();
     cdev_del(&dev_descr);
     device_destroy(dev_class_descr, dev_id);
     class_destroy(dev_class_descr);
