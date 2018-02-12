@@ -29,16 +29,14 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Handle negative integers
 - [x] Handle float results
 - [x] Return NaN when no input yet
-- [x] Make it work
 - [x] Set up a testing framework
 - [x] Add basic tests (simple enough for a human to generate and verify)
-- [ ] Handle large chunks of input data
-- [ ] Research algorithms
+- [x] Research algorithms
 - [ ] Implement an optimal algorithm
-- [ ] Make it right
+- [ ] Handle large chunks of input data
 - [ ] Add more serious tests
-- [ ] Make it fast (or otherwise optimal)
 - [ ] Add stress tests
+- [ ] Describe the solution in readme
 - [ ] Polish the code for better maintainability
 
 ## References
