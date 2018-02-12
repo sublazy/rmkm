@@ -131,7 +131,7 @@ result() {
     result -2.5
 }
 
-@test "Crossing zero" {
+@test "Crossing zero downwards" {
     feed 1
     result 1.0
     feed 0
@@ -142,5 +142,18 @@ result() {
     result -0.5
     feed -3
     result -1.0
+}
+
+@test "Crossing zero upwards" {
+    feed -1
+    result -1.0
+    feed 0
+    result -0.5
+    feed 1
+    result 0.0
+    feed 2
+    result 0.5
+    feed 3
+    result 1.0
 }
 
