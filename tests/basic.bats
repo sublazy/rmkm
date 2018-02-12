@@ -53,7 +53,7 @@ result() {
 }
 
 @test "Whitespace bonanza" {
-    echo -e "   \t  1  \n\t\v   2 2   \v   \v\t\t\n  3  \t " > /dev/median
+    echo -e "   \t  1\t  \n\t\v   \t2  \n2\n   \v   \v\t\t\n  3  \t " > /dev/median
     ans=`cat /dev/median`
     [ "$ans" = "2.0" ]
 }
