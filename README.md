@@ -4,6 +4,10 @@ This software is an attempt to solve a programming assignment for a job intervie
 
 **Note to reviewers: this assignment is not finished yet; please wait with evaluation until it's done.**
 
+## Dependencies
+
+[Bats test framework](https://github.com/sstephenson/bats) (optional).
+
 ## The Task
 
 Goal: implement a loadable Linux kernel module for a pseudo-device that can calculate a median of received integers.
@@ -27,7 +31,7 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Return NaN when no input yet
 - [x] Make it work
 - [x] Set up a testing framework
-- [ ] Add basic tests (simple enough for a human to generate and verify)
+- [x] Add basic tests (simple enough for a human to generate and verify)
 - [ ] Handle large chunks of input data
 - [ ] Research algorithms
 - [ ] Implement an optimal algorithm
