@@ -25,12 +25,12 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Handle negative integers
 - [x] Handle float results
 - [x] Return NaN when no input yet
-- [ ] Handle large chunks of input data
-- [ ] Set up a testing framework
+- [x] Make it work
+- [x] Set up a testing framework
 - [ ] Add basic tests (simple enough for a human to generate and verify)
+- [ ] Handle large chunks of input data
 - [ ] Research algorithms
 - [ ] Implement an optimal algorithm
-- [ ] Make it work
 - [ ] Make it right
 - [ ] Add more serious tests
 - [ ] Make it fast (or otherwise optimal)
