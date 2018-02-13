@@ -121,6 +121,10 @@ device_release(struct inode *inode, struct file *file)
 static ssize_t
 device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
 {
+    // We don't have long responses; prevent duplicate median calculation.
+    if (*offset > 0)
+        return 0;
+
     bool is_result_float = false;
     bool is_result_nan = false;
     int ans = median_calc_get_result(&is_result_float, &is_result_nan);
@@ -144,10 +148,6 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
         int bytes_not_copied = status;
         *offset += ans_len - bytes_not_copied;
         return -EFAULT;
-    }
-
-    if (*offset > ans_len) {
-        ans_len = 0;
     }
 
     return ans_len;
