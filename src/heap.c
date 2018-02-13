@@ -27,6 +27,12 @@ struct heap_s {
     long *data;         // The data array.
     size_t len;         // Length of the data array.
     unsigned int cnt;   // Number of elements currently in the heap.
+
+    // min-heap or max-heap
+    enum heap_flavour flavour;
+
+    // A method to find min- or max-child, depending on the flavour.
+    node_t (*get_extreme_child)(heap_t *heap, node_t node);
 };
 
 /* Private prototypes
@@ -163,11 +169,17 @@ is_order_ok(heap_t *heap, node_t node, node_t child)
 {
     ASSERT_RMKM(node == parent(child));
 
-    // TODO Handle -max and -min flavours.
+    bool is_ok_for_max_heap = false;
+
     if (value(heap, node) >= value(heap, child))
-        return true;
+        is_ok_for_max_heap = true;
     else
-        return false;
+        is_ok_for_max_heap = false;
+
+    if (heap->flavour == MAX_HEAP)
+        return is_ok_for_max_heap;
+    else
+        return !is_ok_for_max_heap;
 }
 
 static void sift_up(heap_t *heap, node_t node)
@@ -190,9 +202,8 @@ static void sift_down(heap_t *heap, node_t node)
     if (children_cnt(heap, node) == 0)
         return;
 
-    // TODO heap flavours
     // extreme = smallest or largest, depending on the heap flavour.
-    node_t extreme_child = get_max_child(heap, node);
+    node_t extreme_child = heap->get_extreme_child(heap, node);
 
     while (!is_order_ok(heap, node, extreme_child)) {
         swap_values(heap, node, extreme_child);
@@ -200,7 +211,7 @@ static void sift_down(heap_t *heap, node_t node)
         if (children_cnt(heap, node) == 0) {
             break;
         } else {
-            extreme_child = get_max_child(heap, node);
+            extreme_child = heap->get_extreme_child(heap, node);
         }
     }
 }
@@ -215,7 +226,7 @@ swap_values(heap_t *heap, node_t node_a, node_t node_b)
 
 /* Public functions
  * -------------------------------------------------------------------------- */
-heap_t *heap_new(void)
+heap_t *heap_new(enum heap_flavour flavour)
 {
     // TODO Support multiple new/delete cycles.
     // Update: Why do I even use a static pool? I can just malloc new heaps.
@@ -227,6 +238,18 @@ heap_t *heap_new(void)
     new_heap->len = PAGE_SIZE;
     new_heap->data = kzalloc(new_heap->len, GFP_KERNEL);
     new_heap->cnt = 0;
+    new_heap->flavour = flavour;
+
+    switch (flavour) {
+    case (MAX_HEAP):
+        new_heap->get_extreme_child = get_max_child;
+        break;
+    case (MIN_HEAP):
+        new_heap->get_extreme_child = get_min_child;
+        break;
+    default:
+        printk(KERN_WARNING "RMKM: Wrong heap flavour!\n");
+    }
 
     return new_heap;
 }

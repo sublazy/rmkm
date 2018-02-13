@@ -39,16 +39,16 @@ static bool is_number_in_range(int n)
 // Insert a new input number into sorted data store.
 static void insert(int n)
 {
-    heap_push(heap_l, n);
-    heap_dump(heap_l);
+    heap_push(heap_r, n);
+    heap_dump(heap_r);
 }
 
 /* Public functions
  * -------------------------------------------------------------------------- */
 void median_calc_init(void)
 {
-    heap_l = heap_new();
-    heap_r = heap_new();
+    heap_l = heap_new(MAX_HEAP);
+    heap_r = heap_new(MIN_HEAP);
 
     ASSERT_RMKM(heap_l != NULL);
     ASSERT_RMKM(heap_r != NULL);
@@ -85,8 +85,8 @@ int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
         return 0;
     }
 
-    int median = heap_pop(heap_l);
-    heap_dump(heap_l);
+    int median = heap_pop(heap_r);
+    heap_dump(heap_r);
 
     return median;
 }

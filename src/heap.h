@@ -13,7 +13,7 @@ enum heap_flavour {
 };
 
 // Instantiate a new, empty heap. Allocate `initial_size` of memory for it.
-heap_t *heap_new(void);
+heap_t *heap_new(enum heap_flavour flavour);
 
 // Delete the heap and free the memory.
 void heap_delete(heap_t *heap);
