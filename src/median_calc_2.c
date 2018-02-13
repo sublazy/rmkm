@@ -100,6 +100,7 @@ void median_calc_feed(int n)
     cnt_left_half = cnt_total / 2;
 }
 
+// TODO It became long and complex. Refactor.
 size_t median_calc_get_result(char *ans_buf)
 {
     ASSERT_RMKM(ans_buf != NULL);
