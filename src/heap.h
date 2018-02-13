@@ -27,6 +27,12 @@ long heap_pop(heap_t *heap);
 // Add a new node.
 void heap_push(heap_t *heap, long n);
 
+// Tell if the heap is empty.
+bool heap_is_empty(heap_t *heap);
+
+// Return number of nodes stored by the heap.
+unsigned int heap_cnt(heap_t *heap);
+
 // Debug print.
 void heap_dump(heap_t *heap);
 

@@ -1,7 +1,8 @@
 ccflags-y := -std=gnu99 -Wno-declaration-after-statement
 
 obj-m += rmkm.o
-rmkm-objs := src/rmkm.o src/int_parser.o src/median_calc_2.o src/heap.o
+rmkm-objs := src/rmkm.o src/int_parser.o src/median_calc_2.o src/heap.o \
+				src/utils.o
 
 build:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules

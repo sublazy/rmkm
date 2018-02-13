@@ -35,12 +35,39 @@ static bool is_number_in_range(int n)
         return false;
 }
 
-
 // Insert a new input number into sorted data store.
-static void insert(int n)
+static void insert(int val)
 {
-    heap_push(heap_r, n);
-    heap_dump(heap_r);
+    if (is_even(cnt_total)) {
+        heap_push(heap_l, val);
+
+        if (heap_cnt(heap_l) == 1) {
+            // I could just return, but I want to assert the size invariant
+            // after each insert.
+            goto done;
+        }
+
+        if (heap_peek(heap_l) > heap_peek(heap_r)) {
+            long val_to_r = heap_pop(heap_l);
+            long val_to_l = heap_pop(heap_r);
+            heap_push(heap_l, val_to_l);
+            heap_push(heap_r, val_to_r);
+        }
+
+    // In case heaps are assymetrical
+    } else {
+        heap_push(heap_l, val);
+        long val_to_r = heap_pop(heap_l);
+        heap_push(heap_r, val_to_r);
+    }
+
+done:
+    // Make sure that both heaps have (almost) the same number of nodes.
+    ASSERT_RMKM((heap_cnt(heap_l) - heap_cnt(heap_r) == 0) ||
+                (heap_cnt(heap_l) - heap_cnt(heap_r) == 1));
+
+    //heap_dump(heap_l);
+    //heap_dump(heap_r);
 }
 
 /* Public functions
@@ -85,8 +112,19 @@ int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
         return 0;
     }
 
-    int median = heap_pop(heap_r);
-    heap_dump(heap_r);
+    long median = 0;
+    if (is_odd(cnt_total)) {
+        median = heap_peek(heap_l);
+    } else {
+        long median_l = heap_peek(heap_l);
+        long median_r = heap_peek(heap_r);
+
+        if (is_odd(median_l + median_r)) {
+            *is_result_float = true;
+        }
+
+        median = (median_l + median_r) / 2;
+    }
 
     return median;
 }

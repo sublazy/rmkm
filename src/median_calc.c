@@ -43,20 +43,6 @@ static bool is_number_in_range(int n)
         return false;
 }
 
-static bool is_even(int n)
-{
-    if (n % 2 == 0)
-        return true;
-    else
-        return false;
-}
-
-static bool is_odd(int n)
-{
-    return !is_even(n);
-}
-
-
 // Tells where in the main array (under which index) the number should be stored.
 static unsigned int idx(int n)
 {

@@ -10,4 +10,9 @@
                              #expr, __FILE__, __LINE__); \
     } while (0);
 
-#endif
+
+bool is_even(int n);
+bool is_odd(int n);
+
+
+#endif // UTILS_H

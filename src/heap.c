@@ -47,7 +47,6 @@ static node_t last_node(heap_t *heap);
 static long value(heap_t *heap, node_t node);
 static void set_value(heap_t *heap, node_t node, long val);
 static bool is_root(node_t node);
-static bool is_empty(heap_t *heap);
 static bool is_order_ok(heap_t *heap, node_t parent, node_t child);
 static void sift_up(heap_t *heap, node_t node);
 static void sift_down(heap_t *heap, node_t node);
@@ -131,14 +130,14 @@ static node_t get_max_child(heap_t *heap, node_t node)
 
 static node_t last_node(heap_t *heap)
 {
-    ASSERT_RMKM(!is_empty(heap));
+    ASSERT_RMKM(!heap_is_empty(heap));
     return heap->cnt - 1;
 }
 
 // Return value of a node
 static long value(heap_t *heap, node_t node)
 {
-    ASSERT_RMKM(!is_empty(heap));
+    ASSERT_RMKM(!heap_is_empty(heap));
     return heap->data[node];
 }
 
@@ -151,14 +150,6 @@ static void set_value(heap_t *heap, node_t node, long val)
 static bool is_root(node_t node)
 {
     if (node == 0)
-        return true;
-    else
-        return false;
-}
-
-static bool is_empty(heap_t *heap)
-{
-    if (heap->cnt == 0)
         return true;
     else
         return false;
@@ -197,7 +188,7 @@ static void sift_up(heap_t *heap, node_t node)
 
 static void sift_down(heap_t *heap, node_t node)
 {
-    ASSERT_RMKM(!is_empty(heap));
+    ASSERT_RMKM(!heap_is_empty(heap));
 
     if (children_cnt(heap, node) == 0)
         return;
@@ -264,12 +255,9 @@ long heap_peek(heap_t *heap)
     return heap->data[ROOT];
 }
 
-// TODO Handle popping from an empty heap.
 long heap_pop(heap_t *heap)
 {
-    if (is_empty(heap)) {
-        return 0;
-    }
+    ASSERT_RMKM(!heap_is_empty(heap));
 
     long result = value(heap, ROOT);
     long last_leaf_val = value(heap, last_node(heap));
@@ -291,9 +279,22 @@ void heap_push(heap_t *heap, long n)
     heap->cnt++;
 }
 
+bool heap_is_empty(heap_t *heap)
+{
+    if (heap->cnt == 0)
+        return true;
+    else
+        return false;
+}
+
+unsigned int heap_cnt(heap_t *heap)
+{
+    return heap->cnt;
+}
+
 void heap_dump(heap_t *heap)
 {
-    printk(KERN_INFO "RMKM: heap ----- \n");
+    printk(KERN_INFO "RMKM: heap %d ----- \n", heap->flavour);
     for (unsigned int i = 0; i < heap->cnt; i++) {
         printk(KERN_INFO "RMKM: heap[%d]: %ld\n", i, heap->data[i]);
     }
