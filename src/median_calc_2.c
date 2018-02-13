@@ -89,6 +89,7 @@ void median_calc_cleanup(void)
 
 void median_calc_feed(int n)
 {
+    // TODO Remove this limit. Pointless in the heap algo.
     if (!is_number_in_range(n)) {
         printk(KERN_WARNING "RMKM: Input number out of range: %d\n", n);
         return;

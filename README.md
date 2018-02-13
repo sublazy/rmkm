@@ -32,7 +32,7 @@ The output is a float number, equal to a median of integers received by the devi
 - [x] Set up a testing framework
 - [x] Add basic tests (simple enough for a human to generate and verify)
 - [x] Research algorithms
-- [ ] Implement an optimal algorithm
+- [x] Implement an optimal algorithm
 - [ ] Handle large chunks of input data
 - [ ] Add more serious tests
 - [ ] Add stress tests
@@ -44,6 +44,7 @@ The output is a float number, equal to a median of integers received by the devi
 - [The Linux Kernel Module Programming Guide](http://tldp.org/LDP/lkmpg/2.6/html/)
 - [The Linux driver implementer’s API guide](https://www.kernel.org/doc/html/v4.15/driver-api/index.html)
 - https://opensourceforu.com/tag/linux-device-drivers-series/
+- http://www.ardendertat.com/2011/11/03/programming-interview-questions-13-median-of-integer-stream/
 
 ## License
 

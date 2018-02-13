@@ -2,12 +2,15 @@
 
 # Helper functions
 # -----------------------------------------------------------------------------
+# Called at the beginning of each test.
 setup() {
     sudo insmod ../rmkm.ko
+    # Permissions should be set by udev. For now though, chmod is good enough.
     sudo chmod o+rw /dev/median
     echo -e "\n--- $BATS_TEST_DESCRIPTION" >> report
 }
 
+# Called at the end of each test.
 teardown() {
     sudo rmmod rmkm.ko
 }
