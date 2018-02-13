@@ -85,7 +85,9 @@ int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
         return 0;
     }
 
-    int median = 0;
+    int median = heap_pop(heap_l);
+    heap_dump(heap_l);
+
     return median;
 }
 
