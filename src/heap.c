@@ -24,7 +24,7 @@ static unsigned int cnt_heaps_in_use = 0;
 
 /* Public functions
  * -------------------------------------------------------------------------- */
-heap_t *heap_new(size_t initial_size)
+heap_t *heap_new(void)
 {
     // TODO Support multiple new/delete cycles.
     unsigned int new_heap_idx = cnt_heaps_in_use;
