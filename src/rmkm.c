@@ -32,6 +32,10 @@ static ssize_t device_write(struct file *, const char *, size_t, loff_t *);
 // Dev name as it appears in /proc/devices.
 #define DEVICE_NAME "median"
 
+// INT64_MIN counts 19 digits and a minus. We need to also add ".5", so that
+// makes 22 digits. Rounding to 32 for a good measure.
+#define MAX_ANS_STRLEN 32
+
 /* Private Data
  * -------------------------------------------------------------------------- */
 // Descriptor of our character device.
@@ -50,9 +54,6 @@ static struct file_operations fops = {
     .open = device_open,
     .release = device_release,
 };
-
-// Buffer to hold the answer (median calculation result).
-static char ans_buf[32];
 
 // Buffer to hold the input data.
 #define INPUT_BUF_SIZE   32
@@ -125,22 +126,9 @@ device_read(struct file *filp, char __user *buf, size_t len, loff_t *offset)
     if (*offset > 0)
         return 0;
 
-    bool is_result_float = false;
-    bool is_result_nan = false;
-    int ans = median_calc_get_result(&is_result_float, &is_result_nan);
-    static size_t ans_len = 0;
+    char ans_buf[MAX_ANS_STRLEN] = {0};
 
-    if (is_result_nan) {
-        sprintf(ans_buf, "NaN\n");
-    } else {
-        if (is_result_float) {
-            sprintf(ans_buf, "%d.5\n", ans);
-        } else {
-            sprintf(ans_buf, "%d.0\n", ans);
-        }
-    }
-
-    ans_len = strlen(ans_buf);
+    size_t ans_len = median_calc_get_result((char *)&ans_buf);
     *offset += ans_len;
 
     int status = copy_to_user(buf, ans_buf, ans_len);

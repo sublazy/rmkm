@@ -100,34 +100,49 @@ void median_calc_feed(int n)
     cnt_left_half = cnt_total / 2;
 }
 
-int median_calc_get_result(bool *is_result_float, bool *is_result_nan)
+size_t median_calc_get_result(char *ans_buf)
 {
-    ASSERT_RMKM(is_result_float != NULL);
-    ASSERT_RMKM(is_result_nan != NULL);
+    ASSERT_RMKM(ans_buf != NULL);
 
-    *is_result_float = false;
-    *is_result_nan = false;
-
-    if (cnt_total == 0) {
-        *is_result_nan = true;
-        return 0;
-    }
-
+    bool is_float = false;
+    bool is_nan = false;
     long median = 0;
+
     if (is_odd(cnt_total)) {
         median = heap_peek(heap_l);
     } else {
         long median_l = heap_peek(heap_l);
         long median_r = heap_peek(heap_r);
 
+        if (median_l + median_r == -1) {
+            // Special snowflake case. -1/2 wouldn't give "-0" answer.
+            size_t len = sprintf(ans_buf, "-0.5\n");
+            return len;
+        }
+
         if (is_odd(median_l + median_r)) {
-            *is_result_float = true;
+            is_float = true;
         }
 
         median = (median_l + median_r) / 2;
     }
 
-    return median;
+    if (cnt_total == 0) {
+        is_nan = true;
+    }
+
+    size_t len = 0;
+    if (is_nan) {
+        len = sprintf(ans_buf, "NaN\n");
+    } else {
+        if (is_float) {
+            len = sprintf(ans_buf, "%ld.5\n", median);
+        } else {
+            len = sprintf(ans_buf, "%ld.0\n", median);
+        }
+    }
+
+    return len;
 }
 
 void median_calc_dbg_print(void)
