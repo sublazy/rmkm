@@ -20,6 +20,10 @@ unsigned int cnt_total = 0;
 
 unsigned int cnt_left_half = 0;
 
+// Our primary data stores: heap-left and -right
+heap_t *heap_l = NULL;
+heap_t *heap_r = NULL;
+
 /* Private functions
  * -------------------------------------------------------------------------- */
 // TODO Move to utils.
@@ -35,17 +39,25 @@ static bool is_number_in_range(int n)
 // Insert a new input number into sorted data store.
 static void insert(int n)
 {
-    (void)n;
+    heap_push(heap_l, n);
+    heap_dump(heap_l);
 }
 
 /* Public functions
  * -------------------------------------------------------------------------- */
 void median_calc_init(void)
 {
+    heap_l = heap_new();
+    heap_r = heap_new();
+
+    ASSERT_RMKM(heap_l != NULL);
+    ASSERT_RMKM(heap_r != NULL);
 }
 
 void median_calc_cleanup(void)
 {
+    heap_delete(heap_l);
+    heap_delete(heap_r);
 }
 
 void median_calc_feed(int n)
