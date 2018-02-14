@@ -14,7 +14,7 @@ Goal: implement a loadable Linux kernel module for a pseudo-device that can calc
 
 On input, the device accepts an arbitrary number of unsorted integers separated by whitespace characters. The device assumes that input data is always valid.
 
-The output is a float number, equal to a median of integers received by the device so far, followed by `EOF` character. If a median is impossible to compute, `NaN` is returned.
+The output is a float number, equal to a median of integers received by the device so far, followed by `EOF`. If a median is impossible to compute, `NaN` is returned.
 
 ## TODOs
 
