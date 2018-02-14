@@ -37,10 +37,60 @@ To summarize:
 
 ## Building and Running
 
-- install linux-headers
-- install [Bats test framework](https://github.com/bats-core/bats-core) (optional).
+### Prerequisites
+- Make sure you have all the standards tools and utilities for kernel development: gcc, linux-headers, etc.
+- If you want to run tests automatically, install [Bats test framework](https://github.com/bats-core/bats-core) (optional).
 
-TODO: Describe
+### Building
+
+To build the variant using heap algorithm (default):
+```
+make
+```
+
+To build the variant using static array algorithm:
+```
+make ALGO=static
+```
+
+### Running
+
+To run automatic tests, run:
+```
+make test
+```
+
+To interact with the module manually (insmod and rmmod require root access):
+```
+> make insmod
+> cat /dev/median
+NaN
+
+> echo 3 7 12 5 5 4 > /dev/median
+> cat /dev/median
+5.0
+
+> make reload
+reloading rmkm module
+
+> echo 1 3 5 > /dev/median
+> cat /dev/median
+3.0
+
+> make rmmod
+```
+
+There are also convenience shell functions (`feed` and `ans`) for manual testing:
+```
+> source ./src/utils.sh
+> make insmod
+> feed 1 2 3
+> ans
+2.0
+> feed 4 5
+> ans
+3.0
+```
 
 ## Known Issues
 
