@@ -9,9 +9,6 @@
 
 /* Constants
  * -------------------------------------------------------------------------- */
-#define INPUT_LIMIT_UPPER   (255)
-#define INPUT_LIMIT_LOWER   (-256)
-#define INPUT_SPREAD  (INPUT_LIMIT_UPPER - INPUT_LIMIT_LOWER + 1)
 
 /* Private Data
  * -------------------------------------------------------------------------- */
@@ -26,15 +23,6 @@ heap_t *heap_r = NULL;
 
 /* Private functions
  * -------------------------------------------------------------------------- */
-// TODO Move to utils.
-static bool is_number_in_range(int n)
-{
-    if ((n >= INPUT_LIMIT_LOWER) && (n <= INPUT_LIMIT_UPPER))
-        return true;
-    else
-        return false;
-}
-
 // Insert a new input number into sorted data store.
 static void insert(int val)
 {
@@ -104,12 +92,6 @@ void median_calc_cleanup(void)
 
 void median_calc_feed(int n)
 {
-    // TODO Remove this limit. Pointless in the heap algo.
-    if (!is_number_in_range(n)) {
-        printk(KERN_WARNING "RMKM: Input number out of range: %d\n", n);
-        return;
-    }
-
     insert(n);
     cnt_total++;
     cnt_left_half = cnt_total / 2;

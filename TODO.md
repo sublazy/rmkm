@@ -18,7 +18,9 @@
 - [x] rename `median_calc_2`
 - [x] describe in readme how to build and run
 - [x] increase range of accepted inputs for the static algo
+- [x] remove the range limit of the heap algo
 - [ ] after filling one memory page, each new heap level makes a realloc
+- [ ] refactor key functions
 - [ ] handle large chunks of input data
 - [ ] switch from int to long int everywhere
 - [ ] add test: `yes` input flood (like `yes "1 2 3 " > /dev/median`)

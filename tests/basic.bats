@@ -160,3 +160,8 @@ result() {
     result 1.0
 }
 
+@test "Large numbers" {
+    feed 7000000 -5000000 -2000000
+    result -2000000.0
+}
+
