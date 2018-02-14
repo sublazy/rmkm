@@ -6,9 +6,9 @@ obj-m += rmkm.o
 rmkm-objs := src/rmkm.o src/int_parser.o src/heap.o src/utils.o
 
 ifeq ($(ALGO),heap)
-rmkm-objs += src/median_calc_2.o
+rmkm-objs += src/median_calc_heap.o
 else
-rmkm-objs += src/median_calc.o
+rmkm-objs += src/median_calc_array.o
 endif
 
 build:
