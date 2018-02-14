@@ -17,6 +17,13 @@ build:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) clean
 
+insmod:
+	 @sudo insmod rmkm.ko
+	 @sudo chmod o+rw /dev/median
+
+rmmod:
+	 @sudo rmmod rmkm.ko
+
 reload:
 	 @echo "reloading rmkm module"
 	 @sudo rmmod rmkm.ko
@@ -31,5 +38,8 @@ help:
 	@echo "   * build"
 	@echo "   * clean"
 	@echo "   * test"
+	@echo "   * insmod"
+	@echo "   * rmmod"
+	@echo "   * reload"
 
 .PHONY: build clean test
