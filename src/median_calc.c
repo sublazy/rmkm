@@ -63,6 +63,11 @@ unsigned int get_occurences(int n)
 
 /* Public functions
  * -------------------------------------------------------------------------- */
+size_t median_calc_get_name(char *name_buf)
+{
+    return sprintf(name_buf, "static array");
+}
+
 void median_calc_init(void)
 {
 }
@@ -156,3 +161,4 @@ void median_calc_dbg_print(void)
         printk(KERN_INFO "RMKM: cnt [%d]:\t%d\n", n, get_occurences(n));
     }
 }
+

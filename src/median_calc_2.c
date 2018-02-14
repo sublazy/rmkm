@@ -72,6 +72,11 @@ done:
 
 /* Public functions
  * -------------------------------------------------------------------------- */
+size_t median_calc_get_name(char *name_buf)
+{
+    return sprintf(name_buf, "two heaps");
+}
+
 void median_calc_init(void)
 {
     heap_l = heap_new(MAX_HEAP);

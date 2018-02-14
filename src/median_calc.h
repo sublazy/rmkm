@@ -2,7 +2,10 @@
 #define MEDIAN_CALC_H
 
 void median_calc_init(void);
+
 void median_calc_cleanup(void);
+
+size_t median_calc_get_name(char *name_buf);
 
 void median_calc_feed(int number);
 

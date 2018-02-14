@@ -63,7 +63,10 @@ static char input_buf[INPUT_BUF_SIZE];
  * -------------------------------------------------------------------------- */
 int init_module(void)
 {
-    printk(KERN_INFO "RMKM: Load the module\n");
+    char algorithm_name[32] = {0};
+    median_calc_get_name(algorithm_name);
+
+    printk(KERN_INFO "RMKM: Load the module. Algorithm: %s.\n", algorithm_name);
 
     if (alloc_chrdev_region(&dev_id, 0, 1, DEVICE_NAME) < 0) {
         return -1;
