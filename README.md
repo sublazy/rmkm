@@ -38,7 +38,7 @@ To summarize:
 ## Building and Running
 
 - install linux-headers
-- install [Bats test framework](https://github.com/sstephenson/bats) (optional).
+- install [Bats test framework](https://github.com/bats-core/bats-core) (optional).
 
 TODO: Describe
 
