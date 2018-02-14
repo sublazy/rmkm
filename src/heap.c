@@ -226,8 +226,9 @@ heap_t *heap_new(enum heap_flavour flavour)
 
     heap_t *new_heap = &heap_pool[new_heap_idx];
 
-    new_heap->len = PAGE_SIZE;
-    new_heap->data = kzalloc(new_heap->len, GFP_KERNEL);
+    // TODO Handle unsuccessful malloc.
+    new_heap->len = 1024 * sizeof(long);
+    new_heap->data = kmalloc_array(1024, sizeof(long), GFP_KERNEL);
     new_heap->cnt = 0;
     new_heap->flavour = flavour;
 
@@ -275,7 +276,7 @@ void heap_push(heap_t *heap, long n)
     heap->data[new_node_idx] = n;
     sift_up(heap, new_node_idx);
 
-    // TODO Resize when it grows too big.
+    // TODO Signal a failure when the heap grows too big.
     heap->cnt++;
 }
 

@@ -19,7 +19,8 @@
 - [x] describe in readme how to build and run
 - [x] increase range of accepted inputs for the static algo
 - [x] remove the range limit of the heap algo
-- [ ] after filling one memory page, each new heap level makes a realloc
+- [x] ~~after filling one memory page, each new heap level makes a realloc~~
+- [x] learn that there's no realloc in kernel space
 - [ ] refactor key functions
 - [ ] handle large chunks of input data
 - [ ] switch from int to long int everywhere
