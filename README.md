@@ -2,8 +2,6 @@
 
 This software is an attempt to solve a programming assignment for a job interview.
 
-**Note to reviewers: this assignment is not finished yet; please wait with evaluation until it's done.**
-
 ## The Task
 
 Goal: implement a loadable Linux kernel module for a pseudo-device that can calculate a median of received integers.
