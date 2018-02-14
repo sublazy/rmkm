@@ -19,8 +19,8 @@
 
 /* Constants
  * -------------------------------------------------------------------------- */
-#define INPUT_LIMIT_UPPER   (15)
-#define INPUT_LIMIT_LOWER   (-16)
+#define INPUT_LIMIT_UPPER   (1023)
+#define INPUT_LIMIT_LOWER   (-1024)
 #define INPUT_SPREAD  (INPUT_LIMIT_UPPER - INPUT_LIMIT_LOWER + 1)
 
 /* Private Data
