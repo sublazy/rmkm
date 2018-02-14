@@ -38,6 +38,16 @@ static bool is_number_in_range(int n)
 // Insert a new input number into sorted data store.
 static void insert(int val)
 {
+    // This implementation is not yet optimal. Instead of blindly pushing
+    // always to heap_l first, let's push to the more appropriate (sort-wise)
+    // heap (therefore taking care of the sort invariant), and then swap root
+    // nodes only if the balance invariant is violated.
+    //
+    // It will still be O(n log n), but we'll reduce the constant factor.
+    //
+    // Anyway, this optimization won't matter until we can handle large amounts
+    // of data.
+
     if (is_even(cnt_total)) {
         heap_push(heap_l, val);
 
