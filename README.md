@@ -94,11 +94,13 @@ There are also convenience shell functions (`feed` and `ans`) for manual testing
 
 ## Known Issues
 
-- The module cannot yet handle input data spanning over multiple buffers. The input buffer is set to be very small (32B) to make the module fail fast, rather than give an impression that it can accept bigger chunks of data. When data is supplied in small chunks, everything works just fine.
+- The module cannot yet handle input data spanning over multiple buffers. The input buffer is set to be very small (32B) to make the module fail fast, rather than give an impression that it can accept bigger chunks of data. When data is supplied in small chunks however, everything works just fine.
 
 - The module doesn't yet reallocate memory progressively. It allocates just a single page (4KiB on a typical desktop system) for each heap. When one of the heaps will try to grow over 4KiB, the module will fail.
 
 - The module has not been stress-tested yet, so it may fail in multiple interesting ways.
+
+- In the static array variant, the module does not signal counter overflow. So after supplying any number more than 2^32 times, the counter will overflow to 0, but the module will happily keep returning invalid medians when asked.
 
 ## Roadmap
 
