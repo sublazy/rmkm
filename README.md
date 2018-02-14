@@ -14,7 +14,7 @@ The output is a float number, equal to a median of integers received by the devi
 
 ### Variant 1: Static Array of Counters
 
-Instead of storing every incoming number separately in memory, we maintain a static array, where we count occurences of numbers on the input under corresponding indexes in the array (possibly with offset, to handle negative numbers). So inserting a new number is accomplished by simply incrementing the counter under corresponding index.This makes insertion an operation of _O(1)_ complexity.
+Instead of storing every incoming number separately in memory, we maintain a static array, where we count occurences of numbers on the input under corresponding indexes in the array (possibly with offset, to handle negative numbers). So inserting a new number is accomplished by simply incrementing the counter under corresponding index. This makes insertion an operation of _O(1)_ complexity.
 
 Finding a median requires traversing our (always sorted) array and summing the counters, until we reach the half of the count of numbers received so far. As the array has a constant size, finding the median is also _O(1)_ operation.
 
@@ -26,7 +26,7 @@ We maintain two binary heaps: left (`heap_l`) and right (`heap_r`). The left hea
 
 With such setup, the two heaps keep our set of numbers received so far always sorted and divided in half, exactly at the median position (we allow numbers of elements in each heap to differ by at most 1). So we can always tell what the current median is, by peeking at the root nodes of two heaps, which is done in _O(1)_ time.
 
-The main contributor to the time complexity is the process of inserting new elements to heaps while keeping them sorted and balanced. An insertion of a new node to the heap (pushing) has _O(_log _n)_ complexity. On average, half of all insertions will violate the invariant of keeping the heaps equal-sized, which will require popping the root from one heap and pushing it to the other. Popping is also an operation of _O(_ log _n)_ complexity.
+The main contributor to the time complexity is the process of inserting new elements to heaps while keeping them sorted and balanced. An insertion of a new node to the heap (pushing) has _O(_ log _n)_ complexity. On average, half of all insertions will violate the invariant of keeping the heaps equal-sized, which will require popping the root from one heap and pushing it to the other. Popping is also an operation of _O(_ log _n)_ complexity.
 
 To summarize:
 
