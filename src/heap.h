@@ -6,26 +6,25 @@
 
 typedef struct heap_s heap_t;
 
-// TODO Implement
 enum heap_flavour {
     MAX_HEAP,   // The largest element is the root node.
     MIN_HEAP,   // The smallest element is the root node.
 };
 
-// Instantiate a new, empty heap. Allocate `initial_size` of memory for it.
+// Instantiate a new, empty heap.
 heap_t *heap_new(enum heap_flavour flavour);
 
 // Delete the heap and free the memory.
 void heap_delete(heap_t *heap);
 
-// Return the value of root node, without popping.
-long heap_peek(heap_t *heap);
-
-// Return the value of root node; delete the node.
-long heap_pop(heap_t *heap);
-
 // Add a new node.
 void heap_push(heap_t *heap, long n);
+
+// Return the value of the root node; delete the node.
+long heap_pop(heap_t *heap);
+
+// Return the value of the root node, without popping.
+long heap_peek(heap_t *heap);
 
 // Tell if the heap is empty.
 bool heap_is_empty(heap_t *heap);
